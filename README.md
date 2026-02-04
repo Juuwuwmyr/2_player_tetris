@@ -12,63 +12,63 @@ A console-based Tetris game implemented in C# with two-player competitive gamepl
   - Player 2: Arrow keys for movement, N for rotation
 - **Visual Design**: All-white blocks using `[]` symbols for better visibility
 
-## **MGA DATA STRUCTURES AT ALGORITHMS NA GINAMIT (TAGLISH)**
+## **DATA STRUCTURES AND ALGORITHMS USED**
 
-### **MGA DATA STRUCTURES:**
+### **DATA STRUCTURES:**
 
 #### 1. **2D Arrays (Two-Dimensional Arrays)**
-- **Sa Game**: Ginamit para sa game board (12x28 grid)
-- **Sa Code**: `int[,] cells` sa Board class
-- **Purpose**: Mag-store ng estado ng bawat cell (empty or occupied)
+- **In Game**: Used for the game board (12x28 grid)
+- **In Code**: `int[,] cells` in Board class
+- **Purpose**: Stores the state of each cell (empty or occupied)
 - **Benefits**: Fast access O(1), memory efficient, easy collision detection
 
-#### 2. **Queue (Pila - FIFO: First In, First Out)**
-- **Sa Game**: Next piece preview system
-- **Sa Code**: `Queue<TetrominoType> nextPieces` sa Player class
+#### 2. **Queue (FIFO: First In, First Out)**
+- **In Game**: Next piece preview system
+- **In Code**: `Queue<TetrominoType> nextPieces` in Player class
 - **Operations**: 
-  - `Enqueue()` - Mag-add ng bagong piece sa dulo
-  - `Dequeue()` - Kunin ang susunod na piece sa simula
+  - `Enqueue()` - Adds new piece to the back
+  - `Dequeue()` - Gets the next piece from the front
   - `ToArray()` - Preview upcoming pieces
 - **Benefits**: Fair piece distribution, predictable gameplay
 
-#### 3. **Stack (Stack - LIFO: Last In, First Out)**
-- **Sa Game**: Game history at event logging
-- **Sa Code**: `Stack<string> gameHistory` sa Game class
+#### 3. **Stack (LIFO: Last In, First Out)**
+- **In Game**: Game history and event logging
+- **In Code**: `Stack<string> gameHistory` in Game class
 - **Operations**:
-  - `Push()` - Mag-add ng event (line clears, moves)
+  - `Push()` - Add event (line clears, moves)
   - `Pop()` - Remove latest event (potential undo)
   - `Peek()` - View latest event without removing
 - **Benefits**: Event tracking, potential undo system
 
 #### 4. **List with Sorting**
-- **Sa Game**: High score ranking system
-- **Sa Code**: `List<HighScore> highScores` sa Game class
-- **Implementation**: `IComparable` interface para sa automatic sorting
+- **In Game**: High score ranking system
+- **In Code**: `List<HighScore> highScores` in Game class
+- **Implementation**: `IComparable` interface for automatic sorting
 - **Benefits**: Automatic descending order by score, timestamp tracking
 
 #### 5. **Classes/Objects (Object-Oriented Programming)**
-- **Sa Game**: Encapsulation ng game components
+- **In Game**: Encapsulation of game components
 - **Classes**: Game, Player, Board, Tetromino, HighScore
 - **Benefits**: Modularity, reusability, clear separation of concerns
 
 #### 6. **3D Arrays**
-- **Sa Game**: Tetromino shapes storage
-- **Sa Code**: `int[,,] shapes` sa Tetromino class
-- **Purpose**: Mag-store ng lahat ng 7 tetromino types with rotations
+- **In Game**: Tetromino shapes storage
+- **In Code**: `int[,,] shapes` in Tetromino class
+- **Purpose**: Store all 7 tetromino types with rotations
 - **Benefits**: Efficient shape management, easy rotation
 
-### **MGA ALGORITHMS:**
+### **ALGORITHMS:**
 
 #### 1. **Matrix Rotation Algorithm**
-- **Sa Game**: Piece rotation (90-degree clockwise)
-- **Sa Code**: `RotateTetromino()` method sa Tetromino class
+- **In Game**: Piece rotation (90-degree clockwise)
+- **In Code**: `RotateTetromino()` method in Tetromino class
 - **Formula**: `temp[j, SIZE-1-i] = shape[i, j]`
 - **Time Complexity**: O(n²) where n=4 (piece size)
 - **Application**: When player presses rotation key (Q/N)
 
 #### 2. **Collision Detection Algorithm**
-- **Sa Game**: Movement validation at boundary checking
-- **Sa Code**: `CheckCollision()` method sa Player class
+- **In Game**: Movement validation and boundary checking
+- **In Code**: `CheckCollision()` method in Player class
 - **Process**: 
   - Check board boundaries
   - Check occupied cells
@@ -77,8 +77,8 @@ A console-based Tetris game implemented in C# with two-player competitive gamepl
 - **Application**: Every move (left/right/down/rotate)
 
 #### 3. **Line Clearing Algorithm**
-- **Sa Game**: Remove completed horizontal lines
-- **Sa Code**: `ClearFullLines()` method sa Board class
+- **In Game**: Remove completed horizontal lines
+- **In Code**: `ClearFullLines()` method in Board class
 - **Process**:
   - Check each row if completely filled
   - Move all lines above down (gravity effect)
@@ -87,15 +87,15 @@ A console-based Tetris game implemented in C# with two-player competitive gamepl
 - **Application**: Automatic after piece placement
 
 #### 4. **Sorting Algorithm (TimSort Hybrid)**
-- **Sa Game**: High score ranking
-- **Sa Code**: `highScores.Sort()` using built-in .NET sorting
+- **In Game**: High score ranking
+- **In Code**: `highScores.Sort()` using built-in .NET sorting
 - **Algorithm**: Hybrid of Merge Sort and Insertion Sort
 - **Time Complexity**: O(n log n) average case
 - **Features**: Stable sorting, efficient for partially sorted data
 - **Application**: Game over - display ranked scores
 
 #### 5. **Queue Operations (FIFO Implementation)**
-- **Sa Game**: Piece sequence management
+- **In Game**: Piece sequence management
 - **Process**: 
   - Dequeue current piece
   - Enqueue new random piece
@@ -104,7 +104,7 @@ A console-based Tetris game implemented in C# with two-player competitive gamepl
 - **Application**: Continuous piece flow during gameplay
 
 #### 6. **Stack Operations (LIFO Implementation)**
-- **Sa Game**: Event history tracking
+- **In Game**: Event history tracking
 - **Process**: 
   - Push events with timestamps
   - Potential pop for undo functionality
@@ -113,13 +113,13 @@ A console-based Tetris game implemented in C# with two-player competitive gamepl
 - **Application**: Game analytics and replay potential
 
 #### 7. **Speed Progression Algorithm**
-- **Sa Game**: Increasing difficulty over time
+- **In Game**: Increasing difficulty over time
 - **Formula**: `newSpeed = INITIAL_SPEED - (lines/LINES_PER_LEVEL) × SPEED_DECREMENT`
 - **Bounds**: `Math.Max(newSpeed, MIN_SPEED)`
 - **Application**: Piece falling speed increases as players clear more lines
 
 #### 8. **Input Handling Algorithm**
-- **Sa Game**: Dual-player simultaneous input processing
+- **In Game**: Dual-player simultaneous input processing
 - **Process**: 
   - Non-blocking key detection
   - Process all available input in one frame
