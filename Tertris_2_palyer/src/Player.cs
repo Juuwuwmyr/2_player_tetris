@@ -88,7 +88,18 @@ namespace Tertris_2_palyer
                     {
 
                         Console.OutputEncoding = Encoding.Unicode;
-                        Console.Write(shape[i, j] != 0 ? "▒▒" : "  ");
+                        if (shape[i, j] != 0)
+                        {
+                            Console.ForegroundColor = Tetromino.GetColor(t.Type);
+                            Console.Write("▒▒");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.Write("  ");
+                        }
+
+
                     }
                 }
             }

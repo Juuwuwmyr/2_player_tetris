@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|c:\\users\\moren\\source\\repos\\tertris_2_palyer\\tertris_2_palyer\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|c:\\users\\moren\\source\\repos\\tertris_2_palyer\\tertris_2_palyer\\src\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\src\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\tertris_2_palyer\\tetromino.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\tetromino.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|c:\\users\\moren\\source\\repos\\tertris_2_palyer\\tertris_2_palyer\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\tertris_2_palyer\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|c:\\users\\moren\\source\\repos\\tertris_2_palyer\\tertris_2_palyer\\src\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\src\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\tertris_2_palyer\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|c:\\users\\moren\\source\\repos\\tertris_2_palyer\\tertris_2_palyer\\src\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\src\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\tertris_2_palyer\\highscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\highscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|c:\\users\\moren\\source\\repos\\tertris_2_palyer\\tertris_2_palyer\\src\\highscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\src\\highscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\tertris_2_palyer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0439C175-A1DF-4370-8442-991DCAA4616F}|Tertris_2_palyer\\Tertris_2_palyer.csproj|solutionrelative:tertris_2_palyer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Tetromino.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Tertris_2_palyer\\Tetromino.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,85 +34,87 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Program.cs",
-              "RelativeDocumentMoniker": "Tertris_2_palyer\\Program.cs",
-              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Program.cs",
-              "RelativeToolTip": "Tertris_2_palyer\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-04T10:29:23.489Z",
-              "IsPinned": true
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Tetromino.cs",
-              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Tetromino.cs",
-              "RelativeDocumentMoniker": "Tertris_2_palyer\\Tetromino.cs",
-              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Tetromino.cs",
-              "RelativeToolTip": "Tertris_2_palyer\\Tetromino.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJYAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-04T12:27:53.405Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Player.cs",
-              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Player.cs",
-              "RelativeDocumentMoniker": "Tertris_2_palyer\\Player.cs",
-              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Player.cs",
-              "RelativeToolTip": "Tertris_2_palyer\\Player.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAAwEMAAAAwAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Player.cs",
+              "RelativeDocumentMoniker": "Tertris_2_palyer\\src\\Player.cs",
+              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Player.cs",
+              "RelativeToolTip": "Tertris_2_palyer\\src\\Player.cs",
+              "ViewState": "AgIAALoAAAAAAAAAAAAAwM0AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-04T12:13:34.294Z",
+              "WhenOpened": "2026-02-04T15:07:23.486Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "HighScore.cs",
-              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\HighScore.cs",
-              "RelativeDocumentMoniker": "Tertris_2_palyer\\HighScore.cs",
-              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\HighScore.cs",
-              "RelativeToolTip": "Tertris_2_palyer\\HighScore.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\HighScore.cs",
+              "RelativeDocumentMoniker": "Tertris_2_palyer\\src\\HighScore.cs",
+              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\HighScore.cs",
+              "RelativeToolTip": "Tertris_2_palyer\\src\\HighScore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-04T11:05:46.159Z"
+              "WhenOpened": "2026-02-04T14:23:32.296Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Game.cs",
-              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Game.cs",
-              "RelativeDocumentMoniker": "Tertris_2_palyer\\Game.cs",
-              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Game.cs",
-              "RelativeToolTip": "Tertris_2_palyer\\Game.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Program.cs",
+              "RelativeDocumentMoniker": "Tertris_2_palyer\\src\\Program.cs",
+              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Program.cs",
+              "RelativeToolTip": "Tertris_2_palyer\\src\\Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-04T10:18:12.314Z"
+              "WhenOpened": "2026-02-04T14:09:56.456Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Board.cs",
-              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Board.cs",
-              "RelativeDocumentMoniker": "Tertris_2_palyer\\Board.cs",
-              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Board.cs",
-              "RelativeToolTip": "Tertris_2_palyer\\Board.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAtAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Board.cs",
+              "RelativeDocumentMoniker": "Tertris_2_palyer\\src\\Board.cs",
+              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Board.cs",
+              "RelativeToolTip": "Tertris_2_palyer\\src\\Board.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAcwI8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-04T10:03:10.598Z"
+              "WhenOpened": "2026-02-04T14:05:19.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Game.cs",
+              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Game.cs",
+              "RelativeDocumentMoniker": "Tertris_2_palyer\\src\\Game.cs",
+              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\src\\Game.cs",
+              "RelativeToolTip": "Tertris_2_palyer\\src\\Game.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAUwCEAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-04T14:03:04.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Tetromino.cs",
+              "DocumentMoniker": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Tetromino.cs",
+              "RelativeDocumentMoniker": "Tertris_2_palyer\\Tetromino.cs",
+              "ToolTip": "C:\\Users\\moren\\source\\repos\\Tertris_2_palyer\\Tertris_2_palyer\\Tetromino.cs",
+              "RelativeToolTip": "Tertris_2_palyer\\Tetromino.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-04T12:27:53.405Z"
             }
           ]
         }

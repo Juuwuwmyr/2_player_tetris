@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 namespace Tertris_2_palyer
 {
@@ -127,13 +128,31 @@ namespace Tertris_2_palyer
 
                         Console.OutputEncoding = Encoding.Unicode;
                         Console.SetCursorPosition(offsetX + (X + j) * 2, offsetY + Y + i);
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = GetColor(Type);
                         Console.Write("▒▒");
+                        Console.ResetColor();
                     }
                 }
             }
         }
-        
+        private static readonly Dictionary<TetrominoType, ConsoleColor> Colors =
+              new Dictionary<TetrominoType, ConsoleColor>
+          {
+            { TetrominoType.I, ConsoleColor.Cyan },
+            { TetrominoType.O, ConsoleColor.Yellow },
+            { TetrominoType.T, ConsoleColor.Magenta },
+            { TetrominoType.S, ConsoleColor.Green },
+            { TetrominoType.Z, ConsoleColor.Red },
+            { TetrominoType.J, ConsoleColor.Blue },
+            { TetrominoType.L, ConsoleColor.DarkYellow }
+          };
+
+        public static ConsoleColor GetColor(TetrominoType type)
+        {
+            return Colors[type];
+        }
+
+
         public void RenderPreview(int offsetX, int offsetY)
         {
             int[,] shape = GetRotatedShape();

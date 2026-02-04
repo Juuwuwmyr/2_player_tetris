@@ -15,10 +15,8 @@ namespace Tertris_2_palyer
             Date = DateTime.Now;
         }
         
-        // Implementation of IComparable for sorting
         public int CompareTo(HighScore other)
         {
-            // Sort by score descending (higher scores first)
             return other.Score.CompareTo(this.Score);
         }
         

@@ -1,10 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Media;
 
 namespace Tertris_2_palyer
 {
     public class Game
     {
+        private SoundPlayer backgroundMusic;
         private Player player1;
         private Player player2;
         private bool gameOver;
@@ -12,7 +15,7 @@ namespace Tertris_2_palyer
         private Random random;
 
         public const int BOARD_WIDTH = 12;
-        public const int BOARD_HEIGHT = 28;
+        public const int BOARD_HEIGHT = 25;
         public const int INITIAL_HP = 100;
         public const int INITIAL_GAME_SPEED = 70;
         public const int MIN_GAME_SPEED = 70;
@@ -28,13 +31,14 @@ namespace Tertris_2_palyer
         {
             random = new Random();
             player1 = new Player(5, 2, random);
-            player2 = new Player(48, 2, random);
+            player2 = new Player(79, 2, random);
             gameOver = false;
             paused = false;
             currentGameSpeed = INITIAL_GAME_SPEED;
             totalLinesCleared = 0;
             gameHistory = new Stack<string>();
             highScores = new List<HighScore>();
+           
         }
 
         public void Run()
@@ -110,7 +114,6 @@ namespace Tertris_2_palyer
                 switch (key.Key)
                 {
                     case ConsoleKey.W:
-                    case ConsoleKey.Q:
                         player1.RotatePiece();
                         break;
                     case ConsoleKey.A:
@@ -124,7 +127,6 @@ namespace Tertris_2_palyer
                         break;
 
                     case ConsoleKey.UpArrow:
-                    case ConsoleKey.N:
                         player2.RotatePiece();
                         break;
                     case ConsoleKey.LeftArrow:
@@ -150,44 +152,93 @@ namespace Tertris_2_palyer
         private void HandleGameOver()
         {
             if (player1.Score > 0)
-            {
                 highScores.Add(new HighScore("Player 1", player1.Score));
-            }
             if (player2.Score > 0)
-            {
                 highScores.Add(new HighScore("Player 2", player2.Score));
-            }
 
             highScores.Sort();
 
-            Console.SetCursorPosition(15, 12);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("GAME OVER!");
+            Console.Clear();
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string musicPath = Path.Combine(baseDir, "asset", "gameover.wav");
+            if (File.Exists(musicPath))
+            {
+                backgroundMusic = new SoundPlayer(musicPath);
+                backgroundMusic.Play();
+            }
+            string gameOverArt = @"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣠⣤⡄⠀⠀⠀⠀⠀⢀⡴⣩⣤⡶⣿⡿⢿⣿⣧⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⣧⣴⣿⠀⠀⠀⠀⢠⠟⣦⣿⣆⣙⣏⣴⣦⣽⠿⢧⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⡇⠳⢾⠀⠀⠀⠀⢸⣼⡋⠀⠀⠉⠉⠉⠉⠀⠀⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣇⣠⣄⠀⠀⠀⠀⢸⣿⣦⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⣻⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢁⠘⠉⡇⠀⠀⠀⢀⣿⡏⠀⣀⣤⣤⣰⠄⢀⣤⣶⣶⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢠⠒⢻⠀⠀⡗⠢⣄⠀⢸⣿⣧⠈⠛⠛⠿⠋⢄⣿⠉⠉⠉⠹⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣼⠶⣾⠀⠰⣿⠒⢾⣿⣮⣿⣽⣦⠀⠀⢀⣠⡄⢸⣷⡀⠀⢀⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢀⡜⢹⡄⠿⠆⠀⠀⠀⢠⠷⣌⡇⠙⣯⠑⣤⣿⣀⡩⠿⢿⣿⠂⣼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢸⠁⢸⠟⠂⠸⡀⠀⠀⢈⠀⠸⣇⣴⣿⢦⡈⠀⠙⣷⣞⣿⡟⢀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⡇⠉⠀⠀⠀⠃⠀⠀⠉⠀⠀⣿⣿⣿⣄⠙⢤⡀⠈⠛⠉⢀⣼⠁⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠹⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣷⡄⠈⠓⠒⣲⠿⣼⣿⣷⣼⣿⣷⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠈⠑⢄⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣦⣠⡴⠿⣾⣽⣽⡇⠀⠘⣿⣿⣿⣆⠀⠀⠀⠀⠀⣀⣀⣠⣤⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢱⡆⠀⠀⣈⠴⢋⣿⣿⣿⣿⣿⣿⣏⠋⠀⠀⠈⠙⣾⢧⡀⠀⢹⣿⣿⣿⣦⣶⣶⢿⣛⣛⣉⠉⢹⡇⠀
+⠀⠀⠀⠀⠀⠀⠀⣠⠾⠓⠒⢉⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣠⣤⣼⡷⡿⡿⠛⠛⣻⣿⣿⣿⠿⠿⠹⣿⡛⢻⣷⠘⣿⠀
+⠀⠀⠀⠀⠀⠀⢸⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣟⠛⠋⢉⣽⣷⣶⡄⢿⣆⠀⣿⡇⢿⣇⣀⡀⠀⢻⣷⢿⣿⡄⢻⡇
+⠀⠀⠀⠀⣀⣀⣸⣿⣿⣿⡿⠿⣿⠛⠋⢩⣯⢹⣿⡿⠟⠋⠀⠀⠸⣿⠀⢹⣿⠈⢿⣆⣿⡇⠸⣿⠋⠁⠀⠸⣿⡀⢹⣷⠸⣷
+⣶⡶⠿⢛⣛⣉⠉⢁⣼⣷⣶⡄⢿⣷⣤⣾⣿⡄⣿⣦⣤⡄⠀⠀⠀⣿⡆⠀⣿⡆⠈⢿⣿⡇⠀⢿⠷⠿⠟⢀⣙⣡⣤⣤⡶⠿
+⢸⣧⢠⣿⠛⢻⣷⢸⣿⠀⢹⣷⢸⣿⠻⠟⢹⣇⢸⣿⠁⣀⣀⠀⠀⠘⠿⠶⠟⠁⣀⣈⣉⣤⣤⡶⠶⠾⠛⠛⠋⠉⠁⠀⠀⠀
+⠈⣿⠈⣿⡄⣤⣶⡄⣿⡿⠛⣿⡆⣿⡆⠀⠘⣿⠌⠿⠟⢛⣋⣠⣤⣴⣶⠶⠿⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢹⡇⠹⣧⣨⣿⠇⠸⡧⠀⠙⣇⣘⣡⣤⣤⣶⠶⠿⠛⠛⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠘⣿⣀⣈⣩⣥⣴⡶⠿⠿⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀              ⠙⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+            string[] artLines = gameOverArt.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            Console.SetCursorPosition(15, 14);
+
+            int consoleWidth = Console.WindowWidth;
+
+            int startY = 1; 
+            for (int i = 0; i < artLines.Length; i++)
+            {
+                int x = Math.Max(0, (consoleWidth - artLines[i].Length) / 2);
+                Console.SetCursorPosition(x, startY + i);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(artLines[i]);
+            }
+
+            Console.ResetColor();
+
+            startY += artLines.Length + 2;
+
+            string winnerText;
             if (player1.IsGameOver() && player2.IsGameOver())
-            {
-                Console.Write("It's a tie!");
-            }
+                winnerText = "It's a tie!";
             else if (player1.IsGameOver())
-            {
-                Console.Write("Player 2 wins!");
-            }
+                winnerText = "Player 2 wins!";
             else
-            {
-                Console.Write("Player 1 wins!");
-            }
-            Console.SetCursorPosition(15, 16);
-            Console.Write("High Scores:");
+                winnerText = "Player 1 wins!";
+
+            Console.SetCursorPosition((consoleWidth - winnerText.Length) / 2, startY);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(winnerText);
+
+        
+
+            startY++;
+
             for (int i = 0; i < Math.Min(5, highScores.Count); i++)
             {
-                Console.SetCursorPosition(15, 18 + i);
-                Console.Write($"{i + 1}. {highScores[i]}");
+                string hsLine = $"{i + 1}. {highScores[i]}";
+                Console.SetCursorPosition((consoleWidth - hsLine.Length) / 2, startY + i);
+                Console.WriteLine(hsLine);
             }
 
-            Console.SetCursorPosition(15, 25);
-            Console.Write("Press any key to exit...");
-            Console.ReadKey();
+            startY += 7;
+
+            string exitPrompt = "Press any key jan supot!";
+            Console.SetCursorPosition((consoleWidth - exitPrompt.Length) / 2, startY);
+            Console.Write(exitPrompt);
+
+            Console.ReadKey(true);
         }
+
     }
 }

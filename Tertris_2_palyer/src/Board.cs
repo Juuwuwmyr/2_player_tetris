@@ -27,30 +27,32 @@ namespace Tertris_2_palyer
         public void Render(int offsetX, int offsetY)
         {
             DrawBorder(offsetX - 1, offsetY - 1, Game.BOARD_WIDTH * 2 + 2, Game.BOARD_HEIGHT + 2);
-            
+
             for (int i = 0; i < Game.BOARD_HEIGHT; i++)
             {
                 for (int j = 0; j < Game.BOARD_WIDTH; j++)
                 {
                     Console.SetCursorPosition(offsetX + j * 2, offsetY + i);
-                    
-                    switch (cells[i, j])
-                    {
-                        case 0:  
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("  ");
-                            break;
-                        default:
 
-                            Console.OutputEncoding = Encoding.Unicode;
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("▒▒");
-                            break;
+                    int cell = cells[i, j];
+
+                    if (cell == 0)
+                    {
+                        Console.Write("  ");
+                    }
+                    else
+                    {
+                        TetrominoType type = (TetrominoType)(cell - 1);
+                        Console.OutputEncoding = Encoding.Unicode;
+                        Console.ForegroundColor = Tetromino.GetColor(type);
+                        Console.Write("▒▒");
+                        Console.ResetColor();
                     }
                 }
             }
+
         }
-        
+
         public int GetCell(int x, int y)
         {
             if (x >= 0 && x < Game.BOARD_WIDTH && y >= 0 && y < Game.BOARD_HEIGHT)
@@ -115,28 +117,28 @@ namespace Tertris_2_palyer
         {
           
             Console.SetCursorPosition(x, y);
-            Console.Write("╔");
+            Console.Write("┏");
             for (int i = 0; i < width - 2; i++)
             {
-                Console.Write("═");
+                Console.Write("━");
             }
-            Console.Write("╗");
+            Console.Write("┓");
             
             for (int i = 1; i < height - 1; i++)
             {
                 Console.SetCursorPosition(x, y + i);
-                Console.Write("║");
+                Console.Write("┃");
                 Console.SetCursorPosition(x + width - 1, y + i);
-                Console.Write("║");
+                Console.Write("┃");
             }
             
             Console.SetCursorPosition(x, y + height - 1);
-            Console.Write("╚");
+            Console.Write("┗");
             for (int i = 0; i < width - 2; i++)
             {
-                Console.Write("═");
+                Console.Write("━");
             }
-            Console.Write("╝");
+            Console.Write("┛");
         }
     }
 }
