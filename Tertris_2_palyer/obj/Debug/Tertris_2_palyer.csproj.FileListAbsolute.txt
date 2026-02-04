@@ -1,0 +1,7 @@
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\obj\Debug\Tertris_2_palyer.csproj.AssemblyReference.cache
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\obj\Debug\Tertris_2_palyer.csproj.CoreCompileInputs.cache
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\bin\Debug\Tertris_2_palyer.exe.config
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\bin\Debug\Tertris_2_palyer.exe
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\bin\Debug\Tertris_2_palyer.pdb
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\obj\Debug\Tertris_2_palyer.exe
+C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\obj\Debug\Tertris_2_palyer.pdb
