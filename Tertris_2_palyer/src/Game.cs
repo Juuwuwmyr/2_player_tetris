@@ -36,37 +36,37 @@ namespace Tertris_2_palyer
 
         public Game()
         {
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.SetWindowSize(160, 40);
+            Console.SetBufferSize(160, 40);
+
             screen = new ScreenBuffer(Console.WindowWidth, Console.WindowHeight);
             random = new Random();
             Console.Clear();
             Console.CursorVisible = true;
 
             string prompt1 = "Enter Player 1 name: ";
-            int startX1 = (Console.WindowWidth - prompt1.Length) / 2;
+            int startX1 = 50;
             int startY1 = 20;
             Console.SetCursorPosition(startX1, startY1);
             Console.Write(prompt1);
-            Console.SetCursorPosition(startX1 + prompt1.Length, startY1); 
             string p1Name = Console.ReadLine();
+
             Console.Clear();
-            Console.CursorVisible = true;
 
             string prompt2 = "Enter Player 2 name: ";
-            int startX2 = (Console.WindowWidth - prompt2.Length) / 2;
+            int startX2 = 50;
             int startY2 = 20;
             Console.SetCursorPosition(startX2, startY2);
             Console.Write(prompt2);
-            Console.SetCursorPosition(startX2 + prompt2.Length, startY2); 
             string p2Name = Console.ReadLine();
 
             Console.Clear();
             Console.CursorVisible = false;
-            Console.OutputEncoding = Encoding.Unicode;
-            Console.SetWindowSize(160, 40);
-            Console.SetBufferSize(160, 40);
 
             player1 = new Player(p1Name, 5, 2, random);
-            player2 = new Player(p2Name, 79, 2, random);
+            player2 = new Player(p2Name, 74, 2, random);
+
             gameTimer = Stopwatch.StartNew();
             lastFallTime = 0;
             gameOver = false;
@@ -75,9 +75,8 @@ namespace Tertris_2_palyer
             totalLinesCleared = 0;
             gameHistory = new Stack<string>();
             highScores = new List<HighScore>();
-
-
         }
+
 
         public void Run()
         {
@@ -90,7 +89,7 @@ namespace Tertris_2_palyer
             }
             while (!gameOver)
             {
-              
+
                 HandleInput();
                 if (!paused)
                 {
@@ -223,42 +222,31 @@ namespace Tertris_2_palyer
                 backgroundMusic.Play();
             }
             string gameOverArt = @"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣠⣤⡄⠀⠀⠀⠀⠀⢀⡴⣩⣤⡶⣿⡿⢿⣿⣧⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⣧⣴⣿⠀⠀⠀⠀⢠⠟⣦⣿⣆⣙⣏⣴⣦⣽⠿⢧⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⡇⠳⢾⠀⠀⠀⠀⢸⣼⡋⠀⠀⠉⠉⠉⠉⠀⠀⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣇⣠⣄⠀⠀⠀⠀⢸⣿⣦⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⣻⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢁⠘⠉⡇⠀⠀⠀⢀⣿⡏⠀⣀⣤⣤⣰⠄⢀⣤⣶⣶⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⢠⠒⢻⠀⠀⡗⠢⣄⠀⢸⣿⣧⠈⠛⠛⠿⠋⢄⣿⠉⠉⠉⠹⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣼⠶⣾⠀⠰⣿⠒⢾⣿⣮⣿⣽⣦⠀⠀⢀⣠⡄⢸⣷⡀⠀⢀⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢀⡜⢹⡄⠿⠆⠀⠀⠀⢠⠷⣌⡇⠙⣯⠑⣤⣿⣀⡩⠿⢿⣿⠂⣼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢸⠁⢸⠟⠂⠸⡀⠀⠀⢈⠀⠸⣇⣴⣿⢦⡈⠀⠙⣷⣞⣿⡟⢀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⡇⠉⠀⠀⠀⠃⠀⠀⠉⠀⠀⣿⣿⣿⣄⠙⢤⡀⠈⠛⠉⢀⣼⠁⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠹⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣷⡄⠈⠓⠒⣲⠿⣼⣿⣷⣼⣿⣷⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠈⠑⢄⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣦⣠⡴⠿⣾⣽⣽⡇⠀⠘⣿⣿⣿⣆⠀⠀⠀⠀⠀⣀⣀⣠⣤⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢱⡆⠀⠀⣈⠴⢋⣿⣿⣿⣿⣿⣿⣏⠋⠀⠀⠈⠙⣾⢧⡀⠀⢹⣿⣿⣿⣦⣶⣶⢿⣛⣛⣉⠉⢹⡇⠀
-⠀⠀⠀⠀⠀⠀⠀⣠⠾⠓⠒⢉⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣠⣤⣼⡷⡿⡿⠛⠛⣻⣿⣿⣿⠿⠿⠹⣿⡛⢻⣷⠘⣿⠀
-⠀⠀⠀⠀⠀⠀⢸⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣟⠛⠋⢉⣽⣷⣶⡄⢿⣆⠀⣿⡇⢿⣇⣀⡀⠀⢻⣷⢿⣿⡄⢻⡇
-⠀⠀⠀⠀⣀⣀⣸⣿⣿⣿⡿⠿⣿⠛⠋⢩⣯⢹⣿⡿⠟⠋⠀⠀⠸⣿⠀⢹⣿⠈⢿⣆⣿⡇⠸⣿⠋⠁⠀⠸⣿⡀⢹⣷⠸⣷
-⣶⡶⠿⢛⣛⣉⠉⢁⣼⣷⣶⡄⢿⣷⣤⣾⣿⡄⣿⣦⣤⡄⠀⠀⠀⣿⡆⠀⣿⡆⠈⢿⣿⡇⠀⢿⠷⠿⠟⢀⣙⣡⣤⣤⡶⠿
-⢸⣧⢠⣿⠛⢻⣷⢸⣿⠀⢹⣷⢸⣿⠻⠟⢹⣇⢸⣿⠁⣀⣀⠀⠀⠘⠿⠶⠟⠁⣀⣈⣉⣤⣤⡶⠶⠾⠛⠛⠋⠉⠁⠀⠀⠀
-⠈⣿⠈⣿⡄⣤⣶⡄⣿⡿⠛⣿⡆⣿⡆⠀⠘⣿⠌⠿⠟⢛⣋⣠⣤⣴⣶⠶⠿⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⢹⡇⠹⣧⣨⣿⠇⠸⡧⠀⠙⣇⣘⣡⣤⣤⣶⠶⠿⠛⠛⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠘⣿⣀⣈⣩⣥⣴⡶⠿⠿⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀ ⠙⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀█████ █████ ⠀⠀⠀⠀⠀                  █████   ███   █████  ███      
+░░███ ░░███                        ░░███   ░███  ░░███  ░░░             
+ ░░███ ███    ██████  █████ ████    ░███   ░███   ░███  ████  ████████  
+  ░░█████    ███░░███░░███ ░███     ░███   ░███   ░███ ░░███ ░░███░░███ 
+   ░░███    ░███ ░███ ░███ ░███     ░░███  █████  ███   ░███  ░███ ░███ 
+    ░███    ░███ ░███ ░███ ░███      ░░░█████░█████░    ░███  ░███ ░███ 
+    █████   ░░██████  ░░████████       ░░███ ░░███      █████ ████ █████
+   ░░░░░     ░░░░░░    ░░░░░░░░         ░░░   ░░░      ░░░░░ ░░░░ ░░░░░ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
             string[] artLines = gameOverArt.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
 
             int consoleWidth = Console.WindowWidth;
 
-            int startY = 1; 
+            int startY = 7; 
             for (int i = 0; i < artLines.Length; i++)
             {
                 int x = Math.Max(0, (consoleWidth - artLines[i].Length) / 2);
-                Console.SetCursorPosition(40, startY + i);
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(25, startY + i);
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(artLines[i]);
             }
+            string[] menuItems = { "REPLAY", "EXIT GAME" };
+            int selectedIndex = 0;
+            int menuStartY = startY + 4; 
 
             Console.ResetColor();
 
@@ -283,8 +271,84 @@ namespace Tertris_2_palyer
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(winnerText);
             Console.SetCursorPosition(45, startY + highScores.Count + 2);
-            Console.Write("Press any key to exit...");
-            Console.ReadKey(true);
+            while (true)
+            {
+                for (int i = 0; i < menuItems.Length; i++)
+                {
+                    int menuWidth = menuItems[i].Length + 4;
+                    int menuHeight = 3;
+                    int startX = 55;
+                    int startYMenu = 22 + i * 3;
+
+                    for (int y = 0; y < menuHeight; y++)
+                    {
+                        Console.SetCursorPosition(startX, startYMenu + y);
+                        Console.Write(new string(' ', menuWidth));
+                    }
+                }
+
+                for (int i = 0; i < menuItems.Length; i++)
+                {
+                    int menuWidth = menuItems[i].Length + 4;
+                    int startX = 55;
+                    int startYMenu = 22 + i * 3;
+
+                    if (i == selectedIndex)
+                    {
+                        Console.SetCursorPosition(startX, startYMenu);
+                        Console.Write("┏" + new string('━', menuWidth - 2) + "┓");
+
+                        Console.SetCursorPosition(startX, startYMenu + 1);
+                        Console.Write("┃ " + menuItems[i].PadRight(menuWidth - 4) + " ┃");
+
+                        Console.SetCursorPosition(startX, startYMenu + 2);
+                        Console.Write("┗" + new string('━', menuWidth - 2) + "┛");
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(startX + 2, startYMenu + 1);
+                        Console.Write(menuItems[i]);
+                    }
+                }
+
+                Thread.Sleep(120);
+
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKey key = Console.ReadKey(true).Key;
+
+                    switch (key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            selectedIndex--;
+                            if (selectedIndex < 0) selectedIndex = menuItems.Length - 1;
+                            break;
+
+                        case ConsoleKey.DownArrow:
+                            selectedIndex++;
+                            if (selectedIndex >= menuItems.Length) selectedIndex = 0;
+                            break;
+
+                        case ConsoleKey.Enter:
+                            if (selectedIndex == 0)
+                            {
+                                Console.Clear();
+                                backgroundMusic?.Stop();
+
+                                Game newGame = new Game();
+                                newGame.Run();
+                                return;
+                            }
+                            else
+                            {
+                                Environment.Exit(0);
+                            }
+
+                            break;
+                    }
+                }
+            }
+
         }
 
     }

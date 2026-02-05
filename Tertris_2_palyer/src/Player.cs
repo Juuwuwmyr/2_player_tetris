@@ -52,24 +52,39 @@ namespace Tertris_2_palyer
 
         private void RenderInfo()
         {
+
             int infoX = X + Game.BOARD_WIDTH * 2 + INFO_PADDING;
             int infoY = Y;
+            int infoBoxX = infoX;
+            int infoBoxY = infoY;
+            int infoBoxWidth = 18;
+            int infoBoxHeight = 5;
 
             Console.ForegroundColor = ConsoleColor.White;
-
-            Console.SetCursorPosition(infoX, infoY);
+            DrawBox(infoBoxX, infoBoxY, infoBoxWidth, infoBoxHeight);
+            Console.SetCursorPosition(infoBoxX + 2, infoBoxY + 1);
             Console.Write(Name);
 
-            Console.SetCursorPosition(infoX, infoY + 1);
-            Console.Write($"HP: {HP,-5}");
+            Console.SetCursorPosition(infoBoxX + 2, infoBoxY + 2);
+            Console.Write($"HP: {HP}");
 
-            Console.SetCursorPosition(infoX, infoY + 2);
+            Console.SetCursorPosition(infoBoxX + 2, infoBoxY + 3);
             Console.Write($"Score: {Score}");
 
-            Console.SetCursorPosition(infoX, infoY + 4);
+
+            Console.SetCursorPosition(infoX, infoBoxY + infoBoxHeight + 1);
             Console.Write("Next Moves:");
 
-            RenderNextPiece(infoX, infoY + 5);
+            int boxX = infoX;
+            int boxY = infoBoxY + infoBoxHeight + 2;
+
+            int boxWidth = 12;   
+            int boxHeight = 14;  
+
+            DrawBox(boxX, boxY, boxWidth, boxHeight);
+
+            RenderNextPiece(boxX + 3, boxY + 1);
+
         }
 
         private void RenderNextPiece(int x, int y)
@@ -87,12 +102,10 @@ namespace Tertris_2_palyer
 
                     for (int j = 0; j < Tetromino.SIZE; j++)
                     {
-                        Console.OutputEncoding = Encoding.Unicode;
                         if (shape[i, j] != 0)
                         {
                             Console.ForegroundColor = Tetromino.GetColor(t.Type);
                             Console.Write("▒▒");
-                            Console.ResetColor();
                         }
                         else
                         {
@@ -101,7 +114,9 @@ namespace Tertris_2_palyer
                     }
                 }
             }
+            Console.ResetColor();
         }
+
 
         public void MovePiece(int dx, int dy)
         {
@@ -211,6 +226,27 @@ namespace Tertris_2_palyer
                 }
             }
             return lines;
+        }
+        private void DrawBox(int x, int y, int width, int height)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+
+          
+            Console.SetCursorPosition(x, y);
+            Console.Write("┏" + new string('━', width - 2) + "┓");
+
+           
+            for (int i = 1; i < height - 1; i++)
+            {
+                Console.SetCursorPosition(x, y + i);
+                Console.Write("┃" + new string(' ', width - 2) + "┃");
+            }
+
+           
+            Console.SetCursorPosition(x, y + height - 1);
+            Console.Write("┗" + new string('━', width - 2) + "┛");
+
+            Console.ResetColor();
         }
 
         public void TakeDamage(int damage)
