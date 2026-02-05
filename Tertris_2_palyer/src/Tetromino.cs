@@ -152,6 +152,20 @@ namespace Tertris_2_palyer
             return Colors[type];
         }
 
+        public void RenderToBuffer(StringBuilder buffer, int offsetX, int offsetY)
+        {
+            int[,] shape = GetRotatedShape();
+
+            for (int i = 0; i < SIZE; i++)
+            {
+                buffer.Append($"\u001b[{offsetY + Y + i + 1};{(offsetX + X) * 2 + 1}H");
+
+                for (int j = 0; j < SIZE; j++)
+                {
+                    buffer.Append(shape[i, j] != 0 ? "▒▒" : "  ");
+                }
+            }
+        }
 
         public void RenderPreview(int offsetX, int offsetY)
         {

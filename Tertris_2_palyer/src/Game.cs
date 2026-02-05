@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Media;
+using System.Text;
+using System.Threading;
 
 namespace Tertris_2_palyer
 {
     public class Game
     {
+        private ScreenBuffer screen;
+
+        private Stopwatch gameTimer;
+        private long lastFallTime;
         private SoundPlayer backgroundMusic;
         private Player player1;
         private Player player2;
@@ -17,7 +24,7 @@ namespace Tertris_2_palyer
         public const int BOARD_WIDTH = 12;
         public const int BOARD_HEIGHT = 25;
         public const int INITIAL_HP = 100;
-        public const int INITIAL_GAME_SPEED = 70;
+        public const int INITIAL_GAME_SPEED = 500;
         public const int MIN_GAME_SPEED = 70;
         public const int SPEED_DECREMENT = 20;
         public const int LINES_PER_LEVEL = 5;
@@ -29,72 +36,89 @@ namespace Tertris_2_palyer
 
         public Game()
         {
+            screen = new ScreenBuffer(Console.WindowWidth, Console.WindowHeight);
             random = new Random();
             Console.Clear();
             Console.CursorVisible = true;
 
-            Console.Write("Enter Player 1 name: ");
+            string prompt1 = "Enter Player 1 name: ";
+            int startX1 = (Console.WindowWidth - prompt1.Length) / 2;
+            int startY1 = 20;
+            Console.SetCursorPosition(startX1, startY1);
+            Console.Write(prompt1);
+            Console.SetCursorPosition(startX1 + prompt1.Length, startY1); 
             string p1Name = Console.ReadLine();
+            Console.Clear();
+            Console.CursorVisible = true;
 
-            Console.Write("Enter Player 2 name: ");
+            string prompt2 = "Enter Player 2 name: ";
+            int startX2 = (Console.WindowWidth - prompt2.Length) / 2;
+            int startY2 = 20;
+            Console.SetCursorPosition(startX2, startY2);
+            Console.Write(prompt2);
+            Console.SetCursorPosition(startX2 + prompt2.Length, startY2); 
             string p2Name = Console.ReadLine();
 
+            Console.Clear();
             Console.CursorVisible = false;
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.SetWindowSize(160, 40);
+            Console.SetBufferSize(160, 40);
 
             player1 = new Player(p1Name, 5, 2, random);
             player2 = new Player(p2Name, 79, 2, random);
-
+            gameTimer = Stopwatch.StartNew();
+            lastFallTime = 0;
             gameOver = false;
             paused = false;
             currentGameSpeed = INITIAL_GAME_SPEED;
             totalLinesCleared = 0;
             gameHistory = new Stack<string>();
             highScores = new List<HighScore>();
-           
+
+
         }
 
         public void Run()
         {
-            Console.Clear();
-            Console.CursorVisible = false;
-
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string musicPath = Path.Combine(baseDir, "asset", "game.wav");
+            if (File.Exists(musicPath))
+            {
+                backgroundMusic = new SoundPlayer(musicPath);
+                backgroundMusic.Play();
+            }
             while (!gameOver)
             {
+              
+                HandleInput();
                 if (!paused)
                 {
                     Update();
                 }
-
                 Render();
-                HandleInput();
-
-                System.Threading.Thread.Sleep(currentGameSpeed);
             }
 
-            HandleGameOver();
+            HandleGameOver(); 
         }
+
 
         private void Update()
         {
-            player1.Update();
-            player2.Update();
+            long now = gameTimer.ElapsedMilliseconds;
+
+            if (now - lastFallTime >= currentGameSpeed)
+            {
+                player1.MovePiece(0, 1);
+                player2.MovePiece(0, 1);
+                lastFallTime = now;
+            }
 
             int p1Lines = player1.ClearLines();
             int p2Lines = player2.ClearLines();
 
-            if (p1Lines > 0)
-            {
-                player2.TakeDamage(20 * p1Lines);
-            }
-
-            if (p2Lines > 0)
-            {
-                player1.TakeDamage(20 * p2Lines);
-            }
-
-
-
-
+            if (p1Lines > 0) player2.TakeDamage(20 * p1Lines);
+            if (p2Lines > 0) player1.TakeDamage(20 * p2Lines);
 
             totalLinesCleared = (player1.Score + player2.Score) / 100;
 
@@ -102,10 +126,9 @@ namespace Tertris_2_palyer
             currentGameSpeed = Math.Max(newSpeed, MIN_GAME_SPEED);
 
             if (player1.IsGameOver() || player2.IsGameOver())
-            {
                 gameOver = true;
-            }
         }
+
 
         private void Render()
         {
@@ -212,7 +235,7 @@ namespace Tertris_2_palyer
 ⠈⣿⠈⣿⡄⣤⣶⡄⣿⡿⠛⣿⡆⣿⡆⠀⠘⣿⠌⠿⠟⢛⣋⣠⣤⣴⣶⠶⠿⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⢹⡇⠹⣧⣨⣿⠇⠸⡧⠀⠙⣇⣘⣡⣤⣤⣶⠶⠿⠛⠛⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠘⣿⣀⣈⣩⣥⣴⡶⠿⠿⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀              ⠙⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+⠀⠀ ⠙⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
             string[] artLines = gameOverArt.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
 
@@ -222,7 +245,7 @@ namespace Tertris_2_palyer
             for (int i = 0; i < artLines.Length; i++)
             {
                 int x = Math.Max(0, (consoleWidth - artLines[i].Length) / 2);
-                Console.SetCursorPosition(x, startY + i);
+                Console.SetCursorPosition(40, startY + i);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(artLines[i]);
             }
@@ -246,15 +269,10 @@ namespace Tertris_2_palyer
             }
 
 
-            Console.SetCursorPosition((consoleWidth - winnerText.Length) / 2, startY);
+            Console.SetCursorPosition(60, startY);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(winnerText);
-
-
-
-
-         
-            Console.SetCursorPosition((consoleWidth - "Press any key to exit".Length) / 2, startY + highScores.Count + 2);
+            Console.SetCursorPosition(45, startY + highScores.Count + 2);
             Console.Write("Press any key to exit...");
             Console.ReadKey(true);
         }

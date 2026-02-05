@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Media;
+using System.Text;
 using Tertris_2_palyer;
 
 namespace Tetris_2_Player
@@ -8,11 +9,10 @@ namespace Tetris_2_Player
     internal class Program
     {
         private static SoundPlayer backgroundMusic;
-
         static void ShowLandingPage()
         {
             Console.Clear();
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
 
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string musicPath = Path.Combine(baseDir, "asset", "background.wav");
@@ -23,95 +23,147 @@ namespace Tetris_2_Player
                 backgroundMusic.PlayLooping();
             }
 
-            Random random = new Random();
+            const int starCount = 30;
+            (int x, int y, bool visible)[] stars = new (int, int, bool)[starCount];
+            Random rand = new Random();
 
+            for (int i = 0; i < starCount; i++)
+            {
+                stars[i] = (rand.Next(0, Console.WindowWidth), rand.Next(0, Console.WindowHeight), rand.NextDouble() > 0.5);
+            }
             string[] cloudArt = new string[]
             {
-                "           ⣀⣠⣤⣤⣄⡀⠀⠀⠀⠀⠀⠀⣀⣀⣀⡀     ",
-                "        ⣠⢞⡫⠄⠀⠀⠀⠉⠓⢦⡀⢀⣴⡿⠉⠀⠉⠉⠳⢦⡀      ",
-                "    ⣀⣠⣄⣀⠀⣼⢣⣎⠀⠀⠀⠀⠀⠀⠀⢻⣟⣟⠔⠀   ⢀⠹⡄      ",
-                "  ⢠⠿⢩⣄⡀⠈⠻⠇⡎⡎⡂⠀⠀⠀⠀⠀⢸⣐⣈⡀⠀    ⠀⡄⡆⣿    ",
-                " ⣠⡤⠶⣾⠀⠘⠉⣻⠄⠀⠀⠀⠀⠀⡴⠏⢉⠈⢻⡄⠀⠀    ⠃⢇⡿⣟⠿⠳⣦⡀ ",
-                " ⢠⡞⠉⠀⠀⠈⠳⠶⠶⠋⠀⠀⠀⠀⠸⠁⠀⢿⣤⡾⠁⠀⠀⠀⠁   ⠀⠀⠈⣧ ",
-                " ⢠⡟⠸⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ⠀⠀⠀⢤ ",
-                " ⢷⡸⡙⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ⠀⠀⢧ ",
-                " ⢀⡴⠞⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ⠀⣇ ",
-                " ⣰⡏⠁⢀⣤⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ⠀⠀⠙ ",
-                " ⣿⢇⠀⣿⡀⠀⢹⡆⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠀⠀⠀⠀⠀⠀⠀   ⠀⠀⠀ ",
-                " ⠘⢯⣓⡀⠀⢀⣼⣱⡀⠀⠀⠀⠀⠀⠀⣰⠟⠁⢙⡧⠀⠀⠀⠀⢠⢀⠀⠀⠀⠀ ",
-                " ⠈⠉⠉⠙⣧⠹⣌⠀⠀⠀⠀⠀⠀⢿⡀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀          "
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⡏⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠤⣤⣤⣤⣤⣤⣤⣤⣤⣿⣿⠇⠀⢿⣿⣷⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⡶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠖⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠂⠀⠀⠀⠀",
+        "⠀⠀⠘⢿⣿⣿⣟⠛⠛⠛⠛⠀⠀⠀⠛⠛⠛⠛⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠈⠛⣿⣿⣦⡀⠀⠀⠀⠀⠀ ⠀┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⢹⣿⡿⠀⠀⠀⠀⠀ ⠀┃ ████████╗ ███████╗ ████████╗ ██████╗  ██╗  ███████╗ ┃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⠀⣾⣿⠁⢀⣤⣾⣦⡀ ⠀┃ ╚══██╔══╝ ██╔════╝ ╚══██╔══╝ ██╔══██╗ ██║  ██╔════╝ ┃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⠀⣸⣿⢇⣶⣿⠟⠙⠻⣿ ⠀┃    ██║    █████╗      ██║    ██████╔╝ ██║  ███████╗ ┃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⢠⣿⣿⠿⠋⠁⠀⠀⠀ ⠳⣄┃    ██║    ██╔══╝      ██║    ██╔═██║  ██║  ╚════██║ ┃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "⠀⠀⠀⠀⠀⡿⠋⠁⠀⠀⠀⠀⠀⠀⠀  ┃    ██║    ███████╗    ██║    ██║ ██║  ██║  ███████║ ┃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+        "                 ┃    ╚═╝    ╚══════╝    ╚═╝    ╚═╝ ╚═╝  ╚═╝  ╚══════╝ ┃",
+        "                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                                  ",
+        "                 ━━━━━━━━━━━━━━━━━━━BSIS 2 PRODUCTION━━━━━━━━━━━━━━━━━━━"
             };
+
+            int cloudStartX = 17;
+            int cloudStartY = 1;
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            int numberOfClouds = 5;
-            for (int i = 0; i < numberOfClouds; i++)
+            for (int i = 0; i < cloudArt.Length; i++)
             {
-                int cloudX = random.Next(0, Math.Max(1, Console.WindowWidth - cloudArt[0].Length));
-                int cloudY = random.Next(2, 9);
-                for (int j = 0; j < cloudArt.Length && cloudY + j < Console.WindowHeight; j++)
-                {
-                    Console.SetCursorPosition(cloudX, cloudY + j);
-                    Console.Write(cloudArt[j]);
-                }
+                Console.SetCursorPosition(cloudStartX, cloudStartY + i);
+                Console.Write(cloudArt[i]);
+            }
+
+            int cloudWidth = 0;
+            foreach (string line in cloudArt)
+            {
+                if (line.Length > cloudWidth)
+                    cloudWidth = line.Length;
             }
 
             Console.ResetColor();
-            string[] tetrisArt = new string[]
-            {
-                "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓",
-                "┃ ████████╗ ███████╗ ████████╗ ██████╗  ██╗  ███████╗ ┃",
-                "┃ ╚══██╔══╝ ██╔════╝ ╚══██╔══╝ ██╔══██╗ ██║  ██╔════╝ ┃",
-                "  ┃    ██║    █████╗      ██║    ██████╔╝ ██║  ███████╗ ┃  ",
-                "  ┃    ██║    ██╔══╝      ██║    ██╔═██║  ██║  ╚════██║ ┃  ",
-                "┃    ██║    ███████╗    ██║    ██║ ██║  ██║  ███████║ ┃",
-                "┃    ╚═╝    ╚══════╝    ╚═╝    ╚═╝ ╚═╝  ╚═╝  ╚══════╝ ┃",
-                "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛",
-                "━━━━━━━━━━━━━━━━━━━BSIS 2 PRODUCTION━━━━━━━━━━━━━━━━━━━"
-            };
 
-            int startY = (30 - tetrisArt.Length) / 2;
-            foreach (string line in tetrisArt)
-            {
-                int startX = (Console.WindowWidth - line.Length) / 2;
-                Console.SetCursorPosition(startX, startY++);
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine(line);
-            }
-
-            string[] menuBox =
-  {
-        "┏━━━━━━━━━━━━━━━━━━━━━━┓",
-        "┃ ENTER  - START GAME  ┃",
-        "┃ L      - HIGH SCORE  ┃",
-        "┃ ESC    - EXIT        ┃",
-        "┗━━━━━━━━━━━━━━━━━━━━━━┛"
-    };
-
-            int menuY = startY + 2;
-            foreach (string line in menuBox)
-            {
-                int menuX = (Console.WindowWidth - line.Length) / 2;
-                Console.SetCursorPosition(menuX, menuY++);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(line);
-            }
-
-            Console.ResetColor();
+            string[] menuItems = { "START GAME", "HIGH SCORE", "EXIT" };
+            int selectedIndex = 0;
+            int menuStartY = 15 + 2;
 
             while (true)
             {
-                ConsoleKey key = Console.ReadKey(true).Key;
+                Console.Clear();
+                for (int i = 0; i < starCount; i++)
+                {
+                    if (rand.NextDouble() < 0.3)
+                        stars[i].visible = !stars[i].visible;
 
-                if (key == ConsoleKey.Enter)
-                    return;
+                    Console.SetCursorPosition(stars[i].x, stars[i].y);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(stars[i].visible ? "⭑" : " ");
+                }
 
-                if (key == ConsoleKey.L)
-                    ShowHighScore();
+                Console.ResetColor();
 
-                if (key == ConsoleKey.Escape)
-                    Environment.Exit(0);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                for (int i = 0; i < cloudArt.Length; i++)
+                {
+                    Console.SetCursorPosition(cloudStartX, cloudStartY + i);
+                    Console.Write(cloudArt[i]);
+                }
+               
+
+
+                for (int i = 0; i < menuItems.Length; i++)
+                {
+                    int menuWidth = menuItems[i].Length + 4;
+                    int menuHeight = 3;
+                    int startX = (Console.WindowWidth - menuWidth) / 2;
+                    int startYMenu = menuStartY + i * 3;
+
+                    for (int y = 0; y < menuHeight; y++)
+                    {
+                        Console.SetCursorPosition(startX, startYMenu + y);
+                        Console.Write(new string(' ', menuWidth));
+                    }
+                }
+
+                for (int i = 0; i < menuItems.Length; i++)
+                {
+                    int menuWidth = menuItems[i].Length + 4;
+                    int startX = (Console.WindowWidth - menuWidth) / 2;
+                    int startYMenu = menuStartY + i * 3;
+
+                    if (i == selectedIndex)
+                    {
+                        Console.SetCursorPosition(startX, startYMenu);
+                        Console.Write("┏" + new string('━', menuWidth - 2) + "┓");
+
+                        Console.SetCursorPosition(startX, startYMenu + 1);
+                        Console.Write("┃ " + menuItems[i].PadRight(menuWidth - 4) + " ┃");
+
+                        Console.SetCursorPosition(startX, startYMenu + 2);
+                        Console.Write("┗" + new string('━', menuWidth - 2) + "┛");
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(startX + 2, startYMenu + 1);
+                        Console.Write(menuItems[i]);
+                    }
+                }
+
+                System.Threading.Thread.Sleep(150);
+
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKey key = Console.ReadKey(true).Key;
+                    switch (key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            selectedIndex--;
+                            if (selectedIndex < 0) selectedIndex = menuItems.Length - 1;
+                            break;
+                        case ConsoleKey.DownArrow:
+                            selectedIndex++;
+                            if (selectedIndex >= menuItems.Length) selectedIndex = 0;
+                            break;
+                        case ConsoleKey.Enter:
+                            switch (selectedIndex)
+                            {
+                                case 0: return;
+                                case 1: ShowHighScore(); break;
+                                case 2: Environment.Exit(0); break;
+                            }
+                            break;
+                    }
+                }
             }
+
         }
+
 
         static void ShowHighScore()
         {
@@ -143,7 +195,13 @@ namespace Tetris_2_Player
         }
         static void Main(string[] args)
             {
-                Console.Title = "2-Player Tetris Game";
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.CursorVisible = false;
+
+            Console.Write("\u001b[?25l"); 
+            Console.Write("\u001b[2J");  
+
+            Console.Title = "2-Player Tetris Game";
 
                 try
                 {

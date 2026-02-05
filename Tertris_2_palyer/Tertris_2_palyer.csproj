@@ -49,6 +49,7 @@
     <Compile Include="src\Player.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\ScreenBuffer.cs" />
     <Compile Include="src\Tetromino.cs" />
   </ItemGroup>
   <ItemGroup>
