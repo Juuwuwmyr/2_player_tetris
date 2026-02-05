@@ -30,8 +30,20 @@ namespace Tertris_2_palyer
         public Game()
         {
             random = new Random();
-            player1 = new Player(5, 2, random);
-            player2 = new Player(79, 2, random);
+            Console.Clear();
+            Console.CursorVisible = true;
+
+            Console.Write("Enter Player 1 name: ");
+            string p1Name = Console.ReadLine();
+
+            Console.Write("Enter Player 2 name: ");
+            string p2Name = Console.ReadLine();
+
+            Console.CursorVisible = false;
+
+            player1 = new Player(p1Name, 5, 2, random);
+            player2 = new Player(p2Name, 79, 2, random);
+
             gameOver = false;
             paused = false;
             currentGameSpeed = INITIAL_GAME_SPEED;
@@ -151,12 +163,23 @@ namespace Tertris_2_palyer
 
         private void HandleGameOver()
         {
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "highscores.txt");
+
+            highScores = HighScore.LoadFromFile(filePath);
+
             if (player1.Score > 0)
-                highScores.Add(new HighScore("Player 1", player1.Score));
+                highScores.Add(new HighScore(player1.Name, player1.Score, DateTime.Now));
+
             if (player2.Score > 0)
-                highScores.Add(new HighScore("Player 2", player2.Score));
+                highScores.Add(new HighScore(player2.Name, player2.Score, DateTime.Now));
 
             highScores.Sort();
+            if (highScores.Count > 10)
+                highScores = highScores.GetRange(0, 10);
+
+            HighScore.SaveToFile(filePath, highScores);
+
+            Console.Clear();
 
             Console.Clear();
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -210,33 +233,29 @@ namespace Tertris_2_palyer
 
             string winnerText;
             if (player1.IsGameOver() && player2.IsGameOver())
+            {
                 winnerText = "It's a tie!";
+            }
             else if (player1.IsGameOver())
-                winnerText = "Player 2 wins!";
+            {
+                winnerText = $"{player2.Name} wins!";
+            }
             else
-                winnerText = "Player 1 wins!";
+            {
+                winnerText = $"{player1.Name} wins!";
+            }
+
 
             Console.SetCursorPosition((consoleWidth - winnerText.Length) / 2, startY);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(winnerText);
 
-        
 
-            startY++;
 
-            for (int i = 0; i < Math.Min(5, highScores.Count); i++)
-            {
-                string hsLine = $"{i + 1}. {highScores[i]}";
-                Console.SetCursorPosition((consoleWidth - hsLine.Length) / 2, startY + i);
-                Console.WriteLine(hsLine);
-            }
 
-            startY += 7;
-
-            string exitPrompt = "Press any key jan supot!";
-            Console.SetCursorPosition((consoleWidth - exitPrompt.Length) / 2, startY);
-            Console.Write(exitPrompt);
-
+         
+            Console.SetCursorPosition((consoleWidth - "Press any key to exit".Length) / 2, startY + highScores.Count + 2);
+            Console.Write("Press any key to exit...");
             Console.ReadKey(true);
         }
 

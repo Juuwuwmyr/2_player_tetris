@@ -14,7 +14,6 @@ namespace Tetris_2_Player
             Console.Clear();
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            // Load and play music
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string musicPath = Path.Combine(baseDir, "asset", "background.wav");
 
@@ -79,28 +78,70 @@ namespace Tetris_2_Player
                 Console.WriteLine(line);
             }
 
-            string[] instructionBox = new string[]
-              {
-                "┏━━━━━━━━━━━━━┓",
-                "┃ PRESS ENTER ┃",
-                "┗━━━━━━━━━━━━━┛"
-              };
+            string[] menuBox =
+  {
+        "┏━━━━━━━━━━━━━━━━━━━━━━┓",
+        "┃ ENTER  - START GAME  ┃",
+        "┃ L      - HIGH SCORE  ┃",
+        "┃ ESC    - EXIT        ┃",
+        "┗━━━━━━━━━━━━━━━━━━━━━━┛"
+    };
 
-            int instructionY = startY + 2; // position below title
-            foreach (string line in instructionBox)
+            int menuY = startY + 2;
+            foreach (string line in menuBox)
             {
-                int instructionX = (Console.WindowWidth - line.Length) / 2;
-                Console.SetCursorPosition(instructionX, instructionY++);
+                int menuX = (Console.WindowWidth - line.Length) / 2;
+                Console.SetCursorPosition(menuX, menuY++);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(line);
             }
 
             Console.ResetColor();
 
-            // Wait for Enter
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            while (true)
+            {
+                ConsoleKey key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Enter)
+                    return;
+
+                if (key == ConsoleKey.L)
+                    ShowHighScore();
+
+                if (key == ConsoleKey.Escape)
+                    Environment.Exit(0);
+            }
         }
-            static void Main(string[] args)
+
+        static void ShowHighScore()
+        {
+            Console.Clear();
+
+            string path = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "highscores.txt"
+            );
+
+            var scores = HighScore.LoadFromFile(path);
+
+            Console.WriteLine("==== HIGH SCORES ====\n");
+
+            if (scores.Count == 0)
+            {
+                Console.WriteLine("No high scores found.");
+            }
+            else
+            {
+                for (int i = 0; i < Math.Min(5, scores.Count); i++)
+                {
+                    Console.WriteLine($"{i + 1}. {scores[i]}");
+                }
+            }
+
+            Console.WriteLine("\nPress any key to return...");
+            Console.ReadKey(true);
+        }
+        static void Main(string[] args)
             {
                 Console.Title = "2-Player Tetris Game";
 
