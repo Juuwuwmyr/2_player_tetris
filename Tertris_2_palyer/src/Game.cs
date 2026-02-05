@@ -23,7 +23,7 @@ namespace Tertris_2_palyer
 
         public const int BOARD_WIDTH = 12;
         public const int BOARD_HEIGHT = 25;
-        public const int INITIAL_HP = 100;
+        public const int INITIAL_HP = 300;
         public const int INITIAL_GAME_SPEED = 500;
         public const int MIN_GAME_SPEED = 70;
         public const int SPEED_DECREMENT = 20;
@@ -86,7 +86,7 @@ namespace Tertris_2_palyer
             if (File.Exists(musicPath))
             {
                 backgroundMusic = new SoundPlayer(musicPath);
-                backgroundMusic.Play();
+                backgroundMusic.PlayLooping();
             }
             while (!gameOver)
             {
@@ -120,14 +120,24 @@ namespace Tertris_2_palyer
             if (p1Lines > 0) player2.TakeDamage(20 * p1Lines);
             if (p2Lines > 0) player1.TakeDamage(20 * p2Lines);
 
-            totalLinesCleared = (player1.Score + player2.Score) / 100;
-
-            int newSpeed = INITIAL_GAME_SPEED - (totalLinesCleared / LINES_PER_LEVEL) * SPEED_DECREMENT;
-            currentGameSpeed = Math.Max(newSpeed, MIN_GAME_SPEED);
+            UpdateGameSpeed(p1Lines, p2Lines);
 
             if (player1.IsGameOver() || player2.IsGameOver())
                 gameOver = true;
         }
+        private void UpdateGameSpeed(int p1Lines, int p2Lines)
+        {
+            int linesThisTurn = p1Lines + p2Lines;
+            if (linesThisTurn > 0)
+            {
+                totalLinesCleared += linesThisTurn;
+
+                int newSpeed = INITIAL_GAME_SPEED - (totalLinesCleared / LINES_PER_LEVEL) * SPEED_DECREMENT;
+
+                currentGameSpeed = Math.Max(newSpeed, MIN_GAME_SPEED);
+            }
+        }
+
 
 
         private void Render()
