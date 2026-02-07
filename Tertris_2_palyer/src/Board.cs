@@ -115,7 +115,7 @@ namespace Tertris_2_palyer
         
         private void DrawBorder(int x, int y, int width, int height)
         {
-          
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.SetCursorPosition(x, y);
             Console.Write("┏");
             for (int i = 0; i < width - 2; i++)
@@ -139,6 +139,7 @@ namespace Tertris_2_palyer
                 Console.Write("━");
             }
             Console.Write("┛");
+            Console.ResetColor();
         }
     }
 }

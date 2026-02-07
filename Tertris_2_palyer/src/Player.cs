@@ -7,7 +7,6 @@ namespace Tertris_2_palyer
     public class Player
     {
         public string Name { get; private set; }
-
         public int HP { get; private set; }
         public int Score { get; private set; }
         public int X { get; private set; }
@@ -58,15 +57,23 @@ namespace Tertris_2_palyer
             int infoBoxX = infoX;
             int infoBoxY = infoY;
             int infoBoxWidth = 18;
-            int infoBoxHeight = 5;
+            int infoBoxHeight = 6;
 
             Console.ForegroundColor = ConsoleColor.White;
             DrawBox(infoBoxX, infoBoxY, infoBoxWidth, infoBoxHeight);
             Console.SetCursorPosition(infoBoxX + 2, infoBoxY + 1);
             Console.Write(Name);
 
+            int barUnits = 12;
+            int filled = (int)Math.Round(barUnits * Math.Max(0, Math.Min(Game.INITIAL_HP, HP)) / (double)Game.INITIAL_HP);
+            ConsoleColor hpColor = ConsoleColor.Red;
+            double pct = HP / (double)Game.INITIAL_HP;
+            if (pct >= 0.7) hpColor = ConsoleColor.Green;
+            else if (pct >= 0.3) hpColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(infoBoxX + 2, infoBoxY + 2);
-            Console.Write($"HP: {HP}");
+            Console.ForegroundColor = hpColor;
+            Console.Write(new string('█', filled) + new string('░', barUnits - filled));
+            Console.ResetColor();
 
             Console.SetCursorPosition(infoBoxX + 2, infoBoxY + 3);
             Console.Write($"Score: {Score}");

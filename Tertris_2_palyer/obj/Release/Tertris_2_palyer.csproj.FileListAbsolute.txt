@@ -1,4 +1,3 @@
-C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\bin\Release\Tertris_2_palyer.exe.config
 C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\bin\Release\Tertris_2_palyer.exe
 C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\bin\Release\Tertris_2_palyer.pdb
 C:\Users\moren\source\repos\Tertris_2_palyer\Tertris_2_palyer\obj\Release\Tertris_2_palyer.csproj.AssemblyReference.cache

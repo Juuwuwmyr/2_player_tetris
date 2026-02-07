@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,13 +13,18 @@ namespace Tertris_2_palyer
         private ScreenBuffer screen;
 
         private Stopwatch gameTimer;
-        private long lastFallTime;
+        private long lastFallTimeP1;
+        private long lastFallTimeP2;
         private SoundPlayer backgroundMusic;
         private Player player1;
         private Player player2;
         private bool gameOver;
         private bool paused;
         private Random random;
+        private bool softDropP1;
+        private bool softDropP2;
+        private long softDropP1Until;
+        private long softDropP2Until;
 
         public const int BOARD_WIDTH = 12;
         public const int BOARD_HEIGHT = 25;
@@ -28,6 +33,8 @@ namespace Tertris_2_palyer
         public const int MIN_GAME_SPEED = 70;
         public const int SPEED_DECREMENT = 20;
         public const int LINES_PER_LEVEL = 5;
+        public const int SOFT_DROP_SPEED = 50;
+        public const int SOFT_DROP_TTL = 300;
 
         private int currentGameSpeed;
         private int totalLinesCleared;
@@ -68,13 +75,18 @@ namespace Tertris_2_palyer
             player2 = new Player(p2Name, 74, 2, random);
 
             gameTimer = Stopwatch.StartNew();
-            lastFallTime = 0;
+            lastFallTimeP1 = 0;
+            lastFallTimeP2 = 0;
             gameOver = false;
             paused = false;
             currentGameSpeed = INITIAL_GAME_SPEED;
             totalLinesCleared = 0;
             gameHistory = new Stack<string>();
             highScores = new List<HighScore>();
+            softDropP1 = false;
+            softDropP2 = false;
+            softDropP1Until = 0;
+            softDropP2Until = 0;
         }
 
 
@@ -106,11 +118,17 @@ namespace Tertris_2_palyer
         {
             long now = gameTimer.ElapsedMilliseconds;
 
-            if (now - lastFallTime >= currentGameSpeed)
+            int speedP1 = (softDropP1 && now <= softDropP1Until) ? SOFT_DROP_SPEED : currentGameSpeed;
+            int speedP2 = (softDropP2 && now <= softDropP2Until) ? SOFT_DROP_SPEED : currentGameSpeed;
+            if (now - lastFallTimeP1 >= speedP1)
             {
                 player1.MovePiece(0, 1);
+                lastFallTimeP1 = now;
+            }
+            if (now - lastFallTimeP2 >= speedP2)
+            {
                 player2.MovePiece(0, 1);
-                lastFallTime = now;
+                lastFallTimeP2 = now;
             }
 
             int p1Lines = player1.ClearLines();
@@ -141,12 +159,51 @@ namespace Tertris_2_palyer
 
         private void Render()
         {
-            Console.SetCursorPosition(0, 5);
+            RenderCenterUI();
 
             player1.Render();
             player2.Render();
 
+            if (paused)
+            {
+                int boxW = 18;
+                int boxH = 5;
+                int startX = (Console.WindowWidth - boxW) / 2;
+                int startY = 10;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(startX, startY);
+                Console.Write("┏" + new string('━', boxW - 2) + "┓");
+                for (int i = 1; i < boxH - 1; i++)
+                {
+                    Console.SetCursorPosition(startX, startY + i);
+                    Console.Write("┃" + new string(' ', boxW - 2) + "┃");
+                }
+                Console.SetCursorPosition(startX, startY + boxH - 1);
+                Console.Write("┗" + new string('━', boxW - 2) + "┛");
+                Console.SetCursorPosition(startX + 4, startY + 2);
+                Console.Write("PAUSED");
+                Console.ResetColor();
+            }
 
+        }
+        private void RenderCenterUI()
+        {
+            string title = "TETRIS 2-PLAYER";
+            int tx = 55;
+            Console.SetCursorPosition(tx, 0);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(title);
+            Console.ResetColor();
+            int midX = 60;
+            for (int y = 2; y < Game.BOARD_HEIGHT + 4; y++)
+            {
+                Console.SetCursorPosition(midX, y);
+                Console.Write("░");
+            }
+            Console.SetCursorPosition(midX - 1, 1);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("VS");
+            Console.ResetColor();
         }
 
         private void HandleInput()
@@ -165,6 +222,8 @@ namespace Tertris_2_palyer
                         break;
                     case ConsoleKey.S:
                         player1.MovePiece(0, 1);
+                        softDropP1 = true;
+                        softDropP1Until = gameTimer.ElapsedMilliseconds + SOFT_DROP_TTL;
                         break;
                     case ConsoleKey.D:
                         player1.MovePiece(1, 0);
@@ -178,6 +237,8 @@ namespace Tertris_2_palyer
                         break;
                     case ConsoleKey.DownArrow:
                         player2.MovePiece(0, 1);
+                        softDropP2 = true;
+                        softDropP2Until = gameTimer.ElapsedMilliseconds + SOFT_DROP_TTL;
                         break;
                     case ConsoleKey.RightArrow:
                         player2.MovePiece(1, 0);
