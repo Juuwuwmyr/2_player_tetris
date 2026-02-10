@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\AsciiFont.cs" />
     <Compile Include="src\Board.cs" />
     <Compile Include="src\Game.cs" />
     <Compile Include="src\HighScore.cs" />

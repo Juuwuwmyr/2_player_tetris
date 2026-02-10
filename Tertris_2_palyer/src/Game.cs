@@ -5,6 +5,7 @@ using System.IO;
 using System.Media;
 using System.Text;
 using System.Threading;
+using Tetris_2_palyer;
 
 namespace Tertris_2_palyer
 {
@@ -52,21 +53,14 @@ namespace Tertris_2_palyer
             Console.Clear();
             Console.CursorVisible = true;
 
-            string prompt1 = "Enter Player 1 name: ";
-            int startX1 = 50;
-            int startY1 = 20;
-            Console.SetCursorPosition(startX1, startY1);
-            Console.Write(prompt1);
-            string p1Name = Console.ReadLine();
+            string p1Name = ReadValidNameAscii("PLAYER ONE");
+            string p2Name = ReadValidNameAscii("PLAYER TWO");
 
-            Console.Clear();
+            player1 = new Player(p1Name, 5, 2, random);
+            player2 = new Player(p2Name, 74, 2, random);
 
-            string prompt2 = "Enter Player 2 name: ";
-            int startX2 = 50;
-            int startY2 = 20;
-            Console.SetCursorPosition(startX2, startY2);
-            Console.Write(prompt2);
-            string p2Name = Console.ReadLine();
+
+
 
             Console.Clear();
             Console.CursorVisible = false;
@@ -88,7 +82,94 @@ namespace Tertris_2_palyer
             softDropP1Until = 0;
             softDropP2Until = 0;
         }
+        private string ReadValidNameAscii(string title)
+        {
+            StringBuilder name = new StringBuilder();
 
+            while (true)
+            {
+                Console.Clear();
+
+                DrawAsciiCentered(title, 6, ConsoleColor.Cyan);
+                DrawAsciiCentered("ENTER NAME", 10, ConsoleColor.Yellow);
+
+                Console.SetCursorPosition(45, 14);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("A–Z ONLY   5–10 CHARACTERS");
+                Console.ResetColor();
+
+                if (name.Length > 0)
+                {
+                    var art = AsciiFont.Render(name.ToString());
+                    int startX = 30;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.SetCursorPosition(startX, 18);
+                    Console.Write(art[0]);
+                    Console.SetCursorPosition(startX, 19);
+                    Console.Write(art[1]);
+                    Console.ResetColor();
+                }
+
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    if (IsValidName(name.ToString()))
+                        return name.ToString().ToUpper();
+
+                    DrawAsciiCentered("INVALID NAME!", 23, ConsoleColor.Red);
+                    Thread.Sleep(1200);
+                    name.Clear();
+                    continue;
+                }
+
+                if (key.Key == ConsoleKey.Backspace && name.Length > 0)
+                {
+                    name.Length--;
+                    continue;
+                }
+
+                char c = char.ToUpper(key.KeyChar);
+
+                if (c >= 'A' && c <= 'Z' && name.Length < 10)
+                {
+                    name.Append(c);
+                }
+            }
+        }
+
+        private void DrawAsciiCentered(string text, int y, ConsoleColor color)
+        {
+            var art = AsciiFont.Render(text);
+            int startX = 30;
+
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(startX, y);
+            Console.Write(art[0]);
+            Console.SetCursorPosition(startX, y + 1);
+            Console.Write(art[1]);
+            Console.ResetColor();
+        }
+        private bool IsValidName(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return false;
+
+            if (input.Length < 5 || input.Length > 10)
+                return false;
+
+            foreach (char c in input)
+            {
+                if (c < 'A' || c > 'Z')
+                    return false;
+            }
+
+            return true;
+        }
+
+
+     
 
         public void Run()
         {
@@ -305,7 +386,7 @@ namespace Tertris_2_palyer
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(artLines[i]);
             }
-            string[] menuItems = { "REPLAY", "EXIT GAME" };
+            string[] menuItems = { "  REPLAY   ", " EXIT GAME " };
             int selectedIndex = 0;
             int menuStartY = startY + 4; 
 
@@ -328,9 +409,28 @@ namespace Tertris_2_palyer
             }
 
 
-            Console.SetCursorPosition(60, startY);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(winnerText);
+            string winnerRaw;
+
+            if (player1.IsGameOver() && player2.IsGameOver())
+                winnerRaw = "TIE!";
+            else if (player1.IsGameOver())
+                winnerRaw = player2.Name + " WINS!";
+            else
+                winnerRaw = player1.Name + " WINS!";
+
+            var winArt = AsciiFont.Render(winnerRaw);
+
+            int centerX = (Console.WindowWidth - winArt[0].Length) / 2;
+            int winY = startY;
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(25, winY);
+            Console.Write(winArt[0]);
+
+            Console.SetCursorPosition(25, winY + 1);
+            Console.Write(winArt[1]);
+            Console.ResetColor();
+
             Console.SetCursorPosition(45, startY + highScores.Count + 2);
             while (true)
             {

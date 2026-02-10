@@ -63,7 +63,7 @@ namespace Tetris_2_Player
             int protectedTop = cloudStartY;
             int protectedBottom = cloudStartY + cloudArt.Length;
 
-            string[] menuItems = { "START GAME", "HIGH SCORE", "EXIT" };
+            string[] menuItems = { " START GAME ", " HIGH SCORE ", "    EXIT    " };
             int selectedIndex = 0;
             int previousIndex = -1;
             int menuStartY = 19;
